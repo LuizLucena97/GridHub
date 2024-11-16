@@ -1,6 +1,6 @@
 namespace GridHub.Test
 {
-    public class UnitTest1
+    public class GlobalUsings
     {
         [Fact]
         public void Test1()
