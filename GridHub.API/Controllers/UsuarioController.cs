@@ -1,6 +1,9 @@
 ﻿using GridHub.Database.Models;
 using GridHub.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using GridHub.API.Configuration;
 
 namespace GridHub.API.Controllers
 {
@@ -26,16 +29,16 @@ namespace GridHub.API.Controllers
         /// <response code="200">Retorna o usuário solicitado.</response>
         /// <response code="404">Usuário não encontrado.</response>
         [HttpGet("{id}")]
-        public ActionResult<Usuario> Get(int id)
+        public async Task<ActionResult<ApiResponse<Usuario>>> Get(int id)
         {
-            var usuario = _usuarioRepository.GetById(id);
+            var usuario = await Task.Run(() => _usuarioRepository.GetById(id));
 
             if (usuario == null)
             {
-                return NotFound(); // Retorna 404 se o usuário não for encontrado
+                return NotFound(ApiResponse<Usuario>.ErrorResponse("Usuário não encontrado."));
             }
 
-            return Ok(usuario); // Retorna 200 e o usuário
+            return Ok(ApiResponse<Usuario>.SuccessResponse(usuario));
         }
 
         /// <summary>
@@ -51,19 +54,19 @@ namespace GridHub.API.Controllers
         /// <response code="201">Retorna o usuário criado.</response>
         /// <response code="400">Dados inválidos.</response>
         [HttpPost]
-        public ActionResult<Usuario> Post([FromBody] Usuario usuario)
+        public async Task<ActionResult<ApiResponse<Usuario>>> Post([FromBody] Usuario usuario)
         {
             if (usuario == null)
             {
-                return BadRequest("Dados inválidos.");
+                return BadRequest(ApiResponse<Usuario>.ErrorResponse("Dados inválidos."));
             }
 
             // Chamar a lógica de hash para senha antes de adicionar
             usuario.DefinirSenha(usuario.Senha);
 
-            _usuarioRepository.Add(usuario);
+            await Task.Run(() => _usuarioRepository.Add(usuario));
 
-            return CreatedAtAction(nameof(Get), new { id = usuario.UsuarioId }, usuario);
+            return CreatedAtAction(nameof(Get), new { id = usuario.UsuarioId }, ApiResponse<Usuario>.SuccessResponse(usuario, "Usuário criado com sucesso."));
         }
 
         /// <summary>
@@ -76,17 +79,17 @@ namespace GridHub.API.Controllers
         /// <response code="400">Dados inválidos ou ID não corresponde ao usuário.</response>
         /// <response code="404">Usuário não encontrado.</response>
         [HttpPut("{id}")]
-        public ActionResult<Usuario> Put(int id, [FromBody] Usuario usuario)
+        public async Task<ActionResult<ApiResponse<Usuario>>> Put(int id, [FromBody] Usuario usuario)
         {
             if (usuario == null || id != usuario.UsuarioId)
             {
-                return BadRequest("Dados inválidos.");
+                return BadRequest(ApiResponse<Usuario>.ErrorResponse("Dados inválidos ou ID não corresponde ao usuário."));
             }
 
-            var usuarioExistente = _usuarioRepository.GetById(id);
+            var usuarioExistente = await Task.Run(() => _usuarioRepository.GetById(id));
             if (usuarioExistente == null)
             {
-                return NotFound(); // Retorna 404 se o usuário não for encontrado
+                return NotFound(ApiResponse<Usuario>.ErrorResponse("Usuário não encontrado."));
             }
 
             // Atualizar o usuário
@@ -100,9 +103,9 @@ namespace GridHub.API.Controllers
                 usuarioExistente.DefinirSenha(usuario.Senha); // Atualiza a senha, se fornecida
             }
 
-            _usuarioRepository.Update(usuarioExistente);
+            await Task.Run(() => _usuarioRepository.Update(usuarioExistente));
 
-            return Ok(usuarioExistente);
+            return Ok(ApiResponse<Usuario>.SuccessResponse(usuarioExistente, "Usuário atualizado com sucesso."));
         }
 
         /// <summary>
@@ -113,17 +116,17 @@ namespace GridHub.API.Controllers
         /// <response code="204">Usuário excluído com sucesso.</response>
         /// <response code="404">Usuário não encontrado.</response>
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult<ApiResponse<object>>> Delete(int id)
         {
-            var usuario = _usuarioRepository.GetById(id);
+            var usuario = await Task.Run(() => _usuarioRepository.GetById(id));
             if (usuario == null)
             {
-                return NotFound(); // Retorna 404 se o usuário não for encontrado
+                return NotFound(ApiResponse<object>.ErrorResponse("Usuário não encontrado."));
             }
 
-            _usuarioRepository.Delete(usuario);
+            await Task.Run(() => _usuarioRepository.Delete(usuario));
 
-            return NoContent(); // Retorna 204 (sem conteúdo) após a exclusão
+            return NoContent();
         }
     }
 }
