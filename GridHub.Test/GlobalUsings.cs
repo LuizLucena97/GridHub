@@ -1,11 +1,1 @@
-namespace GridHub.Test
-{
-    public class GlobalUsings
-    {
-        [Fact]
-        public void Test1()
-        {
-
-        }
-    }
-}
+global using Xunit;

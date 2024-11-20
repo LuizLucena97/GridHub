@@ -72,5 +72,20 @@ namespace GridHub.Repository
 
             return _dbSet.Find(id);
         }
+
+        T IRepository<T>.Add(T entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        T IRepository<T>.Update(T entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SaveChanges()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

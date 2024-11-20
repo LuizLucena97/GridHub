@@ -1,11 +1,13 @@
-﻿namespace GridHub.Repository.Interface
+﻿
+namespace GridHub.Repository.Interface
 {
     public interface IRepository<T>
     {
         T GetById(int? id);
         IEnumerable<T> GetAll();
-        void Add(T entity);
-        void Update(T entity);
+        T Add(T entity);
+        T Update(T entity);
         void Delete(T entity);
+        Task SaveChanges();
     }
 }
