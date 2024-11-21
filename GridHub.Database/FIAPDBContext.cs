@@ -8,6 +8,7 @@ namespace GridHub.Database
     public class FIAPDBContext : DbContext
     {
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Espaco> Espacos { get; set; }
 
         public FIAPDBContext(DbContextOptions<FIAPDBContext> options) : base(options)
         {
@@ -17,13 +18,14 @@ namespace GridHub.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UsuarioMapping());
+            modelBuilder.ApplyConfiguration(new EspacoMapping());
 
             base.OnModelCreating(modelBuilder);
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            // Geração de ID para novos usuários (versão assíncrona)
+            // Geração de ID para novos usuários
             foreach (var entry in ChangeTracker.Entries<Usuario>()
                 .Where(e => e.State == EntityState.Added))
             {

@@ -9,7 +9,7 @@ namespace GridHub.Database.Mappings
     {
         public void Configure(EntityTypeBuilder<Usuario> builder)
         {
-            builder.ToTable("GridHub_Usuarios");
+            builder.ToTable("GRIDHUB_USUARIOS");
 
             builder.HasKey(x => x.UsuarioId);
 
@@ -36,7 +36,7 @@ namespace GridHub.Database.Mappings
                 .HasMaxLength(255);
 
             builder.Property(x => x.DataCriacao)
-                .HasColumnType("date")
+                .HasColumnType("Date")
                 .IsRequired();
 
             builder.HasIndex(x => x.Email)

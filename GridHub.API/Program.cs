@@ -83,6 +83,7 @@ namespace GridHub.API
             });
 
             builder.Services.AddScoped<IRepository<Usuario>, Repository<Usuario>>();
+            builder.Services.AddScoped<IRepository<Espaco>, Repository<Espaco>>();
 
             var app = builder.Build();
 
