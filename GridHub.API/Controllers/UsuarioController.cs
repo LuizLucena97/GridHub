@@ -100,7 +100,7 @@ namespace GridHub.API.Controllers
 
             if (!string.IsNullOrEmpty(usuario.Senha))
             {
-                usuarioExistente.DefinirSenha(usuario.Senha); // Atualiza a senha, se fornecida
+                usuarioExistente.DefinirSenha(usuario.Senha);
             }
 
             await Task.Run(() => _usuarioRepository.Update(usuarioExistente));

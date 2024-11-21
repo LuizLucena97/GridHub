@@ -34,7 +34,7 @@ namespace tests.unit
             };
 
             _mockRepository.Setup(repo => repo.GetById(usuarioId))
-                .Returns(usuario);
+                .ReturnsAsync(usuario);
 
             // Act
             var result = await _controller.Get(usuarioId);
@@ -54,7 +54,7 @@ namespace tests.unit
         {
             // Arrange
             var usuarioId = 1;
-            _mockRepository.Setup(repo => repo.GetById(usuarioId)).Returns((Usuario)null);
+            _mockRepository.Setup(repo => repo.GetById(usuarioId)).ReturnsAsync((Usuario)null);
 
             // Act
             var result = await _controller.Get(usuarioId);
@@ -76,7 +76,7 @@ namespace tests.unit
             novoUsuario.DefinirSenha("senha123");
 
             _mockRepository.Setup(repo => repo.Add(novoUsuario))  // Usando um método síncrono aqui
-                .Returns(novoUsuario);  // Ou qualquer outro comportamento desejado
+                .ReturnsAsync(novoUsuario);  // Ou qualquer outro comportamento desejado
 
             // Act
             var result = await _controller.Post(novoUsuario);
@@ -130,10 +130,10 @@ namespace tests.unit
             };
 
             // Mock para retornar o usuário existente
-            _mockRepository.Setup(repo => repo.GetById(idValido)).Returns(usuarioExistente);
+            _mockRepository.Setup(repo => repo.GetById(idValido)).ReturnsAsync(usuarioExistente);
 
             // Mock para atualizar o usuário
-            _mockRepository.Setup(repo => repo.Update(usuarioExistente)).Returns(usuarioExistente);
+            _mockRepository.Setup(repo => repo.Update(usuarioExistente)).ReturnsAsync(usuarioExistente);
 
             // Act
             var result = await _controller.Put(idValido, usuarioAtualizado);
@@ -180,7 +180,7 @@ namespace tests.unit
             usuarioInvalido.UsuarioId = idInvalido;
 
             // Mock para simular que o usuário não existe
-            _mockRepository.Setup(repo => repo.GetById(idInvalido)).Returns((Usuario)null);
+            _mockRepository.Setup(repo => repo.GetById(idInvalido)).ReturnsAsync((Usuario)null);
 
             // Act
             var result = await _controller.Put(idInvalido, usuarioInvalido);
@@ -205,7 +205,7 @@ namespace tests.unit
             };
 
             // Mock para retornar o usuário existente
-            _mockRepository.Setup(repo => repo.GetById(idValido)).Returns(usuarioExistente);
+            _mockRepository.Setup(repo => repo.GetById(idValido)).ReturnsAsync(usuarioExistente);
 
             // Mock para simular a exclusão do usuário
             _mockRepository.Setup(repo => repo.Delete(usuarioExistente)).Verifiable();
@@ -228,7 +228,7 @@ namespace tests.unit
             var idInvalido = 999; // ID que não existe no banco
 
             // Mock para simular que o usuário não existe
-            _mockRepository.Setup(repo => repo.GetById(idInvalido)).Returns((Usuario)null);
+            _mockRepository.Setup(repo => repo.GetById(idInvalido)).ReturnsAsync((Usuario)null);
 
             // Act
             var result = await _controller.Delete(idInvalido);

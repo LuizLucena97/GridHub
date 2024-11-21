@@ -21,21 +21,25 @@ namespace GridHub.Database
             base.OnModelCreating(modelBuilder);
         }
 
-        public override int SaveChanges()
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            // Geração de ID para novos usuários
+            // Geração de ID para novos usuários (versão assíncrona)
             foreach (var entry in ChangeTracker.Entries<Usuario>()
                 .Where(e => e.State == EntityState.Added))
             {
-                // Se não foi definido um ID, encontrar o próximo disponível
                 if (entry.Entity.UsuarioId == 0)
                 {
-                    var maxId = Usuarios.Any() ? Usuarios.Max(u => u.UsuarioId) : 0;
+                    var maxId = await Usuarios.AsNoTracking()
+                        .OrderByDescending(u => u.UsuarioId)
+                        .Select(u => u.UsuarioId)
+                        .FirstOrDefaultAsync(cancellationToken);
+
                     entry.Entity.UsuarioId = maxId + 1;
                 }
             }
 
-            return base.SaveChanges();
+            return await base.SaveChangesAsync(cancellationToken);
         }
+
     }
 }

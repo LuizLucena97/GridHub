@@ -15,7 +15,7 @@ namespace GridHub.Database.Mappings
 
             builder.Property(x => x.UsuarioId)
                 .HasColumnName("UsuarioId")
-                .ValueGeneratedNever();
+                .ValueGeneratedOnAdd();
 
             builder.Property(x => x.Email)
                 .HasMaxLength(100)
@@ -38,6 +38,9 @@ namespace GridHub.Database.Mappings
             builder.Property(x => x.DataCriacao)
                 .HasColumnType("date")
                 .IsRequired();
+
+            builder.HasIndex(x => x.Email)
+                .IsUnique();
         }
     }
 }

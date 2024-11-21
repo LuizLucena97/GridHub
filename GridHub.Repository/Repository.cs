@@ -1,6 +1,9 @@
 ﻿using GridHub.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 using GridHub.Database;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GridHub.Repository
 {
@@ -16,76 +19,69 @@ namespace GridHub.Repository
         }
 
         // Adicionar uma nova entidade
-        public void Add(T entity)
+        public async Task<T> Add(T entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity), "A entidade não pode ser nula.");
             }
 
-            _context.Add(entity);
-            _context.SaveChanges();
+            await _context.AddAsync(entity); 
+            await SaveChanges(); 
+            return entity; 
         }
 
         // Remover uma entidade
-        public void Delete(T entity)
+        public async Task Delete(T entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity), "A entidade não pode ser nula.");
             }
 
-            _context.Remove(entity);
-            _context.SaveChanges();
+            _context.Remove(entity); 
+            await SaveChanges(); 
         }
 
         // Atualizar uma entidade existente
-        public void Update(T entity)
+        public async Task<T> Update(T entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity), "A entidade não pode ser nula.");
             }
 
-            _context.Entry(entity).State = EntityState.Modified;
-            _context.SaveChanges();
+            _context.Entry(entity).State = EntityState.Modified; 
+            await SaveChanges(); 
+            return entity; 
         }
 
-        // Obter todas as entidades
-        public IEnumerable<T> GetAll()
+        // Obter todas as entidades (assíncrono)
+        public async Task<IEnumerable<T>> GetAll()
         {
             if (_dbSet == null)
             {
                 throw new InvalidOperationException("DbSet não está inicializado.");
             }
 
-            return _dbSet.ToList();
+            return await _dbSet.ToListAsync(); 
         }
 
         // Obter uma entidade pelo ID
-        public T GetById(int? id)
+        public async Task<T> GetById(int? id)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id), "O ID não pode ser nulo.");
             }
 
-            return _dbSet.Find(id);
+            return await _dbSet.FindAsync(id); 
         }
 
-        T IRepository<T>.Add(T entity)
+        // Método assíncrono para salvar mudanças
+        public async Task SaveChanges()
         {
-            throw new NotImplementedException();
-        }
-
-        T IRepository<T>.Update(T entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SaveChanges()
-        {
-            throw new NotImplementedException();
+            await _context.SaveChangesAsync(); 
         }
     }
 }

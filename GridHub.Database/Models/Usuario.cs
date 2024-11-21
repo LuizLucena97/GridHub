@@ -14,18 +14,24 @@ namespace GridHub.Database.Models
 
         public int UsuarioId { get; set; }
 
+        [Required(ErrorMessage = "Email é obrigatório.")]
+        [EmailAddress(ErrorMessage = "O email fornecido não é válido.")]
         [DefaultValue("exemplo@email.com")]
         public string Email { get; set; }
 
+        [Required(ErrorMessage = "Senha é obrigatória.")]
         [DefaultValue("")]
         public string Senha { get; private set; }
 
+        [Required(ErrorMessage = "Nome é obrigatório.")]
         [DefaultValue("João")]
         public string Nome { get; set; }
 
+        [Required]
         [DefaultValue("000000000")]
         public string Telefone { get; set; }
 
+        [Required]
         [DefaultValue("foto_padrao.png")]
         public string FotoPerfil { get; set; }
 
