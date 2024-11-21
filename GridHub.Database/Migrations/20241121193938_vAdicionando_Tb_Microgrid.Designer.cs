@@ -3,6 +3,7 @@ using System;
 using GridHub.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oracle.EntityFrameworkCore.Metadata;
 
@@ -11,9 +12,11 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace GridHub.Database.Migrations
 {
     [DbContext(typeof(FIAPDBContext))]
-    partial class FIAPDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241121193938_vAdicionando_Tb_Microgrid")]
+    partial class vAdicionando_Tb_Microgrid
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,30 +88,6 @@ namespace GridHub.Database.Migrations
                     b.HasIndex("UsuarioId");
 
                     b.ToTable("GRIDHUB_ESPACOS", (string)null);
-                });
-
-            modelBuilder.Entity("GridHub.Database.Models.Investimento", b =>
-                {
-                    b.Property<int>("InvestimentoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InvestimentoId"));
-
-                    b.Property<string>("DescricaoProposta")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("NVARCHAR2(500)");
-
-                    b.Property<int>("MicrogridId")
-                        .HasColumnType("NUMBER(10)");
-
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("NUMBER(10)");
-
-                    b.HasKey("InvestimentoId");
-
-                    b.ToTable("Investimento");
                 });
 
             modelBuilder.Entity("GridHub.Database.Models.Microgrid", b =>

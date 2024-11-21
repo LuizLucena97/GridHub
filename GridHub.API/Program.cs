@@ -84,6 +84,8 @@ namespace GridHub.API
 
             builder.Services.AddScoped<IRepository<Usuario>, Repository<Usuario>>();
             builder.Services.AddScoped<IRepository<Espaco>, Repository<Espaco>>();
+            builder.Services.AddScoped<IRepository<Microgrid>, Repository<Microgrid>>();
+            builder.Services.AddScoped<IRepository<Investimento>, Repository<Investimento>>();
 
             var app = builder.Build();
 

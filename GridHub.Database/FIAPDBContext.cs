@@ -9,6 +9,8 @@ namespace GridHub.Database
     {
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Espaco> Espacos { get; set; }
+        public DbSet<Microgrid> Microgrids{ get; set; }
+        public DbSet<Investimento> Investimento { get; set; }
 
         public FIAPDBContext(DbContextOptions<FIAPDBContext> options) : base(options)
         {
