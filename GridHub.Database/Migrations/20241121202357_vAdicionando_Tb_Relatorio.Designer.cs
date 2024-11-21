@@ -3,6 +3,7 @@ using System;
 using GridHub.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oracle.EntityFrameworkCore.Metadata;
 
@@ -11,9 +12,11 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace GridHub.Database.Migrations
 {
     [DbContext(typeof(FIAPDBContext))]
-    partial class FIAPDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241121202357_vAdicionando_Tb_Relatorio")]
+    partial class vAdicionando_Tb_Relatorio
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
