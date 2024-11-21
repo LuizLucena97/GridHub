@@ -61,7 +61,6 @@ namespace GridHub.API.Controllers
                 return BadRequest(ApiResponse<Usuario>.ErrorResponse("Dados inválidos."));
             }
 
-            // Chamar a lógica de hash para senha antes de adicionar
             usuario.DefinirSenha(usuario.Senha);
 
             await Task.Run(() => _usuarioRepository.Add(usuario));

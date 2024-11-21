@@ -12,13 +12,17 @@ namespace tests.unit
     public class EspacoControllerTests
     {
         private readonly Mock<IRepository<Espaco>> _mockRepository;
+        private readonly Mock<IRepository<Usuario>> _mockUsuarioRepository;
         private readonly EspacoController _controller;
 
         public EspacoControllerTests()
         {
+            _mockUsuarioRepository = new Mock<IRepository<Usuario>>();
             _mockRepository = new Mock<IRepository<Espaco>>();
-            _controller = new EspacoController(_mockRepository.Object);
+            var mockUsuarioRepository = new Mock<IRepository<Usuario>>(); 
+            _controller = new EspacoController(_mockRepository.Object, mockUsuarioRepository.Object); 
         }
+
 
         [Fact]
         public async Task Get_ReturnsEspaco_WhenEspacoExists()
@@ -79,8 +83,10 @@ namespace tests.unit
             // Arrange
             var novoEspaco = new Espaco
             {
+                UsuarioId = 1, 
                 NomeEspaco = "Novo Espaco",
                 Endereco = "Rua Nova, 456, Bairro Novo",
+                FotoEspaco = "foto_padrao.jpg",
                 FonteEnergia = "Energia Solar",
                 OrientacaoSolar = "Sul",
                 MediaSolar = 4.5,
@@ -93,8 +99,14 @@ namespace tests.unit
             _mockRepository.Setup(repo => repo.Add(novoEspaco))
                 .ReturnsAsync(novoEspaco);
 
+            var mockUsuarioRepository = new Mock<IRepository<Usuario>>();
+            mockUsuarioRepository.Setup(repo => repo.GetById(1)) // Simulando um usuário existente
+                .ReturnsAsync(new Usuario("usuario@teste.com", "Usuário Teste"));
+
+            var controller = new EspacoController(_mockRepository.Object, mockUsuarioRepository.Object);
+
             // Act
-            var result = await _controller.Post(novoEspaco);
+            var result = await controller.Post(novoEspaco);
 
             // Assert
             var actionResult = Assert.IsType<ActionResult<ApiResponse<Espaco>>>(result);
@@ -103,7 +115,9 @@ namespace tests.unit
 
             Assert.True(response.Success);
             Assert.Equal("Novo Espaco", response.Data.NomeEspaco);
+            Assert.Equal(1, response.Data.UsuarioId);
         }
+
 
         [Fact]
         public async Task Post_ReturnsBadRequest_WhenEspacoIsNull()

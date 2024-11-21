@@ -75,8 +75,8 @@ namespace tests.unit
             var novoUsuario = new Usuario("test@example.com", "senha123");
             novoUsuario.DefinirSenha("senha123");
 
-            _mockRepository.Setup(repo => repo.Add(novoUsuario))  // Usando um método síncrono aqui
-                .ReturnsAsync(novoUsuario);  // Ou qualquer outro comportamento desejado
+            _mockRepository.Setup(repo => repo.Add(novoUsuario)) 
+                .ReturnsAsync(novoUsuario); 
 
             // Act
             var result = await _controller.Post(novoUsuario);
@@ -114,7 +114,7 @@ namespace tests.unit
         public async Task Put_ReturnsOk_WhenUsuarioIsUpdated()
         {
             // Arrange
-            var idValido = 1; // ID de um usuário existente
+            var idValido = 1;
             var usuarioExistente = new Usuario("oldemail@example.com", "oldpassword123")
             {
                 UsuarioId = idValido,
@@ -129,10 +129,8 @@ namespace tests.unit
                 Telefone = "987654321"
             };
 
-            // Mock para retornar o usuário existente
             _mockRepository.Setup(repo => repo.GetById(idValido)).ReturnsAsync(usuarioExistente);
 
-            // Mock para atualizar o usuário
             _mockRepository.Setup(repo => repo.Update(usuarioExistente)).ReturnsAsync(usuarioExistente);
 
             // Act
@@ -157,7 +155,7 @@ namespace tests.unit
             // Arrange
             var idInvalido = 999;
             var usuarioInvalido = new Usuario("test@example.com", "senha123");
-            usuarioInvalido.UsuarioId = 1000; // ID diferente do ID esperado
+            usuarioInvalido.UsuarioId = 1000; 
 
             // Act
             var result = await _controller.Put(idInvalido, usuarioInvalido);
@@ -175,11 +173,10 @@ namespace tests.unit
         public async Task Put_ReturnsNotFound_WhenUsuarioDoesNotExist()
         {
             // Arrange
-            var idInvalido = 999; // ID que não existe no banco
+            var idInvalido = 999; 
             var usuarioInvalido = new Usuario("test@example.com", "senha123");
             usuarioInvalido.UsuarioId = idInvalido;
 
-            // Mock para simular que o usuário não existe
             _mockRepository.Setup(repo => repo.GetById(idInvalido)).ReturnsAsync((Usuario)null);
 
             // Act
@@ -198,16 +195,14 @@ namespace tests.unit
         public async Task Delete_ReturnsNoContent_WhenUsuarioIsDeleted()
         {
             // Arrange
-            var idValido = 1; // ID de um usuário existente
+            var idValido = 1; 
             var usuarioExistente = new Usuario("test@example.com", "senha123")
             {
                 UsuarioId = idValido
             };
 
-            // Mock para retornar o usuário existente
             _mockRepository.Setup(repo => repo.GetById(idValido)).ReturnsAsync(usuarioExistente);
 
-            // Mock para simular a exclusão do usuário
             _mockRepository.Setup(repo => repo.Delete(usuarioExistente)).Verifiable();
 
             // Act
@@ -217,7 +212,6 @@ namespace tests.unit
             var actionResult = Assert.IsType<ActionResult<ApiResponse<object>>>(result);
             var noContentResult = Assert.IsType<NoContentResult>(actionResult.Result);
 
-            // Verifica se a exclusão foi chamada no repositório
             _mockRepository.Verify(repo => repo.Delete(usuarioExistente), Times.Once);
         }
 
@@ -225,9 +219,8 @@ namespace tests.unit
         public async Task Delete_ReturnsNotFound_WhenUsuarioDoesNotExist()
         {
             // Arrange
-            var idInvalido = 999; // ID que não existe no banco
+            var idInvalido = 999; 
 
-            // Mock para simular que o usuário não existe
             _mockRepository.Setup(repo => repo.GetById(idInvalido)).ReturnsAsync((Usuario)null);
 
             // Act

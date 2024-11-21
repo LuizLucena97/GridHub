@@ -6,8 +6,6 @@ namespace GridHub.Database.Models
 {
     public class Espaco
     {
-        public Usuario Usuario { get; set; }
-
         public int EspacoId { get; set; }
 
         [Required]
@@ -38,7 +36,7 @@ namespace GridHub.Database.Models
         public string OrientacaoSolar { get; set; }
 
         [Range(0, double.MaxValue, ErrorMessage = "A média solar deve ser um valor positivo.")]
-        [DefaultValue(4.5)] 
+        [DefaultValue(4.5)]
         public double MediaSolar { get; set; }
 
         [Required]
@@ -47,7 +45,7 @@ namespace GridHub.Database.Models
         public string Topografia { get; set; }
 
         [Range(0, double.MaxValue, ErrorMessage = "A área total deve ser um valor positivo.")]
-        [DefaultValue(5000.0)] 
+        [DefaultValue(5000.0)]
         public double AreaTotal { get; set; }
 
         [StringLength(50)]
@@ -55,7 +53,7 @@ namespace GridHub.Database.Models
         public string DirecaoVento { get; set; }
 
         [Range(0, double.MaxValue, ErrorMessage = "A velocidade do vento deve ser um valor positivo.")]
-        [DefaultValue(15.0)] 
+        [DefaultValue(15.0)]
         public double VelocidadeVento { get; set; }
     }
 }

@@ -16,10 +16,12 @@ namespace GridHub.API.Controllers
     public class EspacoController : ControllerBase
     {
         private readonly IRepository<Espaco> _espacoRepository;
+        private readonly IRepository<Usuario> _usuarioRepository;
 
-        public EspacoController(IRepository<Espaco> espacoRepository)
+        public EspacoController(IRepository<Espaco> espacoRepository, IRepository<Usuario> usuarioRepository)
         {
             _espacoRepository = espacoRepository ?? throw new ArgumentNullException(nameof(espacoRepository));
+            _usuarioRepository = usuarioRepository ?? throw new ArgumentNullException(nameof(usuarioRepository));
         }
 
         /// <summary>
@@ -52,7 +54,6 @@ namespace GridHub.API.Controllers
         {
             var espacos = await Task.Run(() => _espacoRepository.GetAll());
 
-            // Corrigido o erro CS1503 convertendo o IEnumerable para List
             var espacosList = espacos.ToList();
 
             if (espacosList == null || espacosList.Count == 0)
@@ -79,10 +80,30 @@ namespace GridHub.API.Controllers
                 return BadRequest(ApiResponse<Espaco>.ErrorResponse("Dados inválidos."));
             }
 
-            // Adicionando o espaço ao repositório
-            await Task.Run(() => _espacoRepository.Add(espaco));
+            var usuario = await Task.Run(() => _usuarioRepository.GetById(espaco.UsuarioId));
+            if (usuario == null)
+            {
+                return BadRequest(ApiResponse<Espaco>.ErrorResponse("Usuário não encontrado."));
+            }
 
-            return CreatedAtAction(nameof(Get), new { id = espaco.EspacoId }, ApiResponse<Espaco>.SuccessResponse(espaco, "Espaço criado com sucesso."));
+            Espaco novoEspaco = new Espaco
+            {
+                UsuarioId = espaco.UsuarioId,
+                Endereco = espaco.Endereco,
+                NomeEspaco = espaco.NomeEspaco,
+                FotoEspaco = espaco.FotoEspaco ?? "foto_espaco_padrao.jpg", 
+                FonteEnergia = espaco.FonteEnergia,
+                OrientacaoSolar = espaco.OrientacaoSolar,
+                MediaSolar = espaco.MediaSolar,
+                Topografia = espaco.Topografia,
+                AreaTotal = espaco.AreaTotal,
+                DirecaoVento = espaco.DirecaoVento ?? "Vento predominante do norte", 
+                VelocidadeVento = espaco.VelocidadeVento
+            };
+
+            await Task.Run(() => _espacoRepository.Add(novoEspaco));
+
+            return CreatedAtAction(nameof(Get), new { id = novoEspaco.EspacoId }, ApiResponse<Espaco>.SuccessResponse(novoEspaco, "Espaço criado com sucesso."));
         }
 
         /// <summary>
@@ -108,7 +129,6 @@ namespace GridHub.API.Controllers
                 return NotFound(ApiResponse<Espaco>.ErrorResponse("Espaço não encontrado."));
             }
 
-            // Atualizando o espaço
             espacoExistente.Endereco = espaco.Endereco;
             espacoExistente.NomeEspaco = espaco.NomeEspaco;
             espacoExistente.FotoEspaco = espaco.FotoEspaco;
@@ -120,7 +140,6 @@ namespace GridHub.API.Controllers
             espacoExistente.DirecaoVento = espaco.DirecaoVento;
             espacoExistente.VelocidadeVento = espaco.VelocidadeVento;
 
-            // Salvando as alterações
             await Task.Run(() => _espacoRepository.Update(espacoExistente));
 
             return Ok(ApiResponse<Espaco>.SuccessResponse(espacoExistente, "Espaço atualizado com sucesso."));
@@ -142,7 +161,6 @@ namespace GridHub.API.Controllers
                 return NotFound(ApiResponse<object>.ErrorResponse("Espaço não encontrado."));
             }
 
-            // Excluindo o espaço
             await Task.Run(() => _espacoRepository.Delete(espaco));
 
             return NoContent();

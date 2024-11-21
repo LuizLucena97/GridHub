@@ -27,7 +27,8 @@ namespace GridHub.Database.Mappings
                    .HasMaxLength(100);
 
             builder.Property(e => e.FotoEspaco)
-                   .HasMaxLength(500);
+                   .HasMaxLength(500)
+                   .IsRequired();
 
             builder.Property(e => e.FonteEnergia)
                    .IsRequired()
@@ -38,25 +39,29 @@ namespace GridHub.Database.Mappings
                    .HasMaxLength(50);
 
             builder.Property(e => e.MediaSolar)
-                   .HasPrecision(18, 2);
+                   .HasPrecision(18, 2)
+                   .IsRequired();
 
             builder.Property(e => e.Topografia)
                    .IsRequired()
                    .HasMaxLength(100);
 
             builder.Property(e => e.AreaTotal)
-                   .HasPrecision(18, 2);
+                   .HasPrecision(18, 2)
+                   .IsRequired();
 
             builder.Property(e => e.DirecaoVento)
-                   .HasMaxLength(50);
+                   .HasMaxLength(50)
+                   .IsRequired();
 
             builder.Property(e => e.VelocidadeVento)
-                   .HasPrecision(18, 2);
+                   .HasPrecision(18, 2)
+                   .IsRequired();
 
-            builder.HasOne(e => e.Usuario)
-                   .WithMany()
-                   .HasForeignKey(e => e.UsuarioId)
-                   .OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne<Usuario>()  
+                   .WithMany()  
+                   .HasForeignKey(e => e.UsuarioId)  
+                   .OnDelete(DeleteBehavior.Cascade);  
         }
     }
 }
