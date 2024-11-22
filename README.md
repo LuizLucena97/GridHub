@@ -1,11 +1,11 @@
-![Logo Preto](https://i.imgur.com/YBfWeLJ.png)
+![Logo Preto](https://i.imgur.com/ntYU4qY.png)
 
 -----
 ## API Web ASP.NET Core para cadastro de investimento coletivo para a instalação de Microgrids e incentivo a utilização de energia verde, com possibilidade de demonstrar interesse em alugar seu espaço para instalação!
 -----
 GridHub é uma plataforma de financiamento coletivo que visa viabilizar a instalação de microgrids e promover o consumo de energia verde. Através de um modelo colaborativo, conecta investidores, consumidores e proprietários de espaços, permitindo que todos participem da transição para uma matriz energética mais sustentável. A plataforma oferece a oportunidade de financiar projetos de microgrids, adotar energia limpa e obter retorno financeiro, ao mesmo tempo em que contribui para a redução da pegada de carbono. Com transparência e monitoramento em tempo real, o GridHub facilita a gestão dos projetos e potencializa o impacto ambiental positivo.
 
-###Link para o video pitch: https://www.youtube.com/watch?v=tdruTbBAiNg
+### Link para o video pitch: https://www.youtube.com/watch?v=tdruTbBAiNg
 -----
 ## Integrantes do Grupo
 - **Breno Lemes Santiago** - RM: 552270
@@ -117,7 +117,7 @@ Usei **Health Check** para monitorar automaticamente a saúde dos serviços da m
 
 - **URL**:
   ```
-  https://localhost:7121/Health-Check
+  https://localhost:7203/Health-Check
 ## Instruções para Rodar a API
 
 ### Pré-requisitos
@@ -131,4 +131,4 @@ Usei **Health Check** para monitorar automaticamente a saúde dos serviços da m
 1. **Clone o Repositório**
 
    ```bash
-   git clone https://RM552344@dev.azure.com/RM552344/GlobalSolution/_git/GlobalSolution
+   git clone https://github.com/LuizLucena97/GridHub.git
