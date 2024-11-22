@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridHub.API", "GridHub.API\GridHub.API.csproj", "{B6807EF2-932C-4736-B748-FE0F096801ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridHub.API", "GridHub.API\GridHub.API.csproj", "{B6807EF2-932C-4736-B748-FE0F096801ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridHub.Database", "GridHub.Database\GridHub.Database.csproj", "{78CD5FAA-E13A-47A8-BF43-C8E88EB87846}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridHub.Database", "GridHub.Database\GridHub.Database.csproj", "{78CD5FAA-E13A-47A8-BF43-C8E88EB87846}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridHub.Repository", "GridHub.Repository\GridHub.Repository.csproj", "{21D7F05E-3082-46A7-B567-B8270CD44AC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridHub.Repository", "GridHub.Repository\GridHub.Repository.csproj", "{21D7F05E-3082-46A7-B567-B8270CD44AC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridHub.Service", "GridHub.Service\GridHub.Service.csproj", "{0454292C-20C2-4AF3-A015-F3B0A37547E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridHub.Service", "GridHub.Service\GridHub.Service.csproj", "{0454292C-20C2-4AF3-A015-F3B0A37547E6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CF858FCE-4D40-4012-9ED7-73EFE63AED54}"
 EndProject
@@ -17,9 +17,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ml", "ml", "{3DB9D959-0642-
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{ED9E3DD3-F1CF-4523-A1E5-6AEF66437B4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridHub.Test", "GridHub.Test\GridHub.Test.csproj", "{4E740933-384D-4833-B18F-952E3CE3BF9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridHub.Test", "GridHub.Test\GridHub.Test.csproj", "{4E740933-384D-4833-B18F-952E3CE3BF9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridHub.ML", "GridHub.ML\GridHub.ML.csproj", "{84578B67-4141-43E8-98EE-DA7911F6B2D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridHub.ML", "GridHub.ML\GridHub.ML.csproj", "{84578B67-4141-43E8-98EE-DA7911F6B2D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
