@@ -54,6 +54,17 @@ namespace GridHub.API.Extensions
                 swagger.IncludeXmlComments(xmlPath);
             });
 
+
+
+            return services;
+        }
+
+        public static IServiceCollection AddHealthCheck(this IServiceCollection services, APPConfiguration configuration)
+        {
+            services.AddHealthChecks()
+                .AddOracle(configuration.OracleFIAP.Connection, name: configuration.OracleFIAP.Name)
+                .AddUrlGroup(new Uri("https://viacep.com.br/"), name: "VIA CEP");
+
             return services;
         }
     }

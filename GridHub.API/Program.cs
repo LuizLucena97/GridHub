@@ -8,6 +8,11 @@ using GridHub.Database;
 using GridHub.Database.Models;
 using Microsoft.Extensions.Options;
 using System.Reflection;
+using ERP_InsightWise.Service.CEP;
+using Microsoft.Extensions.DependencyInjection;
+using ERP_InsightWise.API.Extensions;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using GridHub.API.Extensions;
 
 namespace GridHub.API
 {
@@ -87,6 +92,8 @@ namespace GridHub.API
             builder.Services.AddScoped<IRepository<Microgrid>, Repository<Microgrid>>();
             builder.Services.AddScoped<IRepository<Investimento>, Repository<Investimento>>();
             builder.Services.AddScoped<IRepository<Relatorio>, Repository<Relatorio>>();
+            builder.Services.AddScoped<ICEPService, CEPService>();
+            builder.Services.AddHealthCheck(appConfiguration);
 
             var app = builder.Build();
 
@@ -106,6 +113,16 @@ namespace GridHub.API
             app.MapControllers();
 
             app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapHealthChecks("/health-check", new HealthCheckOptions()
+                {
+                    Predicate = _ => true,
+                    ResponseWriter = HealthCheckExtensions.WriteResponse
+                });
+            });
 
             app.Run();
         }
