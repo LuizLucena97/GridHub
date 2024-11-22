@@ -89,7 +89,7 @@ public class RelatorioControllerTest
         int relatorioId = 1;
         var relatorio = new Relatorio
         {
-            RelatorioId = 2, // ID diferente
+            RelatorioId = 2, 
             EnergiaGerada = 200,
             TempPainelSolar = 35,
             LucroGerado = 300
