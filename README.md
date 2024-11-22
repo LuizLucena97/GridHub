@@ -2,7 +2,7 @@
 
 ## API Web ASP.NET Core para cadastro de investimento coletivo para a instalação de Microgrids e incentivo a utilização de energia verde, com possibilidade de demonstrar interesse em alugar seu espaço para instalação!
 
-Esta API permite operações CRUD relacionadas a registros e facilita a coleta de dados para intenção de investimento em microgrids, bem como a demonstração de interesse em locação de espaço para instalação. Nosso objetivo é incentivar o uso de energia verde através de tecnologia acessível.
+GridHub é uma plataforma de financiamento coletivo que visa viabilizar a instalação de microgrids e promover o consumo de energia verde. Através de um modelo colaborativo, conecta investidores, consumidores e proprietários de espaços, permitindo que todos participem da transição para uma matriz energética mais sustentável. A plataforma oferece a oportunidade de financiar projetos de microgrids, adotar energia limpa e obter retorno financeiro, ao mesmo tempo em que contribui para a redução da pegada de carbono. Com transparência e monitoramento em tempo real, o GridHub facilita a gestão dos projetos e potencializa o impacto ambiental positivo.
 
 ## Integrantes do Grupo
 - **Breno Lemes Santiago** - RM: 552270
