@@ -1,4 +1,3 @@
-
 using GridHub.API.Configuration;
 using GridHub.Repository.Interface;
 using GridHub.Repository;
@@ -13,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ERP_InsightWise.API.Extensions;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using GridHub.API.Extensions;
+using Stripe;
 
 namespace GridHub.API
 {
@@ -29,6 +29,9 @@ namespace GridHub.API
             builder.Services.Configure<APPConfiguration>(configuration);
 
             configuration.Bind(appConfiguration);
+
+            StripeConfiguration.ApiKey = configuration["Stripe:ApiKey"];
+
 
             // Add services to the container.
 
@@ -94,6 +97,18 @@ namespace GridHub.API
             builder.Services.AddScoped<IRepository<Relatorio>, Repository<Relatorio>>();
             builder.Services.AddScoped<ICEPService, CEPService>();
             builder.Services.AddHealthCheck(appConfiguration);
+            
+            builder.Services.AddLogging(builder =>
+            {
+                builder.AddConsole();  
+                builder.SetMinimumLevel(LogLevel.Debug);  
+            });
+            
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins",
+                    builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });
 
             var app = builder.Build();
 
@@ -109,6 +124,7 @@ namespace GridHub.API
 
             app.UseAuthorization();
 
+            app.UseCors("AllowAllOrigins");
 
             app.MapControllers();
 
