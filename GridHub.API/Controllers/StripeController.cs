@@ -4,10 +4,18 @@ using Stripe;
 
 namespace GridHub.API.Controllers
 {
+    /// <summary>
+    /// Controller responsável por interagir com a API do Stripe para processar pagamentos.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class StripeController : ControllerBase
     {
+        /// <summary>
+        /// Cria uma intenção de pagamento no Stripe com base nos detalhes fornecidos.
+        /// </summary>
+        /// <param name="paymentRequest">Os detalhes da solicitação de pagamento, incluindo o valor.</param>
+        /// <returns>Retorna um objeto contendo o clientSecret para completar o pagamento ou uma mensagem de erro.</returns>
         [HttpPost("create-payment-intent")]
         public IActionResult CreatePaymentIntent([FromBody] PaymentRequest paymentRequest)
         {
@@ -31,9 +39,14 @@ namespace GridHub.API.Controllers
         }
     }
 
+    /// <summary>
+    /// Modelo que representa a solicitação de pagamento.
+    /// </summary>
     public class PaymentRequest
     {
+        /// <summary>
+        /// Valor do pagamento a ser processado, em centavos.
+        /// </summary>
         public long Amount { get; set; }
     }
 }
-
