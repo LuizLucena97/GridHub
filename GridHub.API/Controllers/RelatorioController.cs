@@ -45,26 +45,6 @@ namespace GridHub.API.Controllers
         }
 
         /// <summary>
-        /// Obtém todos os relatórios cadastrados.
-        /// </summary>
-        /// <returns>Lista de relatórios.</returns>
-        /// <response code="200">Retorna a lista de relatórios.</response>
-        [HttpGet]
-        public async Task<ActionResult<ApiResponse<List<Relatorio>>>> GetAll()
-        {
-            var relatorios = await Task.Run(() => _relatorioRepository.GetAll());
-
-            var relatoriosList = relatorios.ToList();
-
-            if (relatoriosList == null || relatoriosList.Count == 0)
-            {
-                return NotFound(ApiResponse<List<Relatorio>>.ErrorResponse("Nenhum relatório encontrado."));
-            }
-
-            return Ok(ApiResponse<List<Relatorio>>.SuccessResponse(relatoriosList));
-        }
-
-        /// <summary>
         /// Adiciona um novo relatório ao sistema.
         /// </summary>
         /// <param name="relatorio">Objeto contendo os dados do relatório a ser criado.</param>

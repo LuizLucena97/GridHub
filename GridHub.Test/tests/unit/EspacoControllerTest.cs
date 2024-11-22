@@ -100,7 +100,7 @@ namespace tests.unit
                 .ReturnsAsync(novoEspaco);
 
             var mockUsuarioRepository = new Mock<IRepository<Usuario>>();
-            mockUsuarioRepository.Setup(repo => repo.GetById(1)) // Simulando um usuário existente
+            mockUsuarioRepository.Setup(repo => repo.GetById(1)) 
                 .ReturnsAsync(new Usuario("usuario@teste.com", "Usuário Teste"));
 
             var controller = new EspacoController(_mockRepository.Object, mockUsuarioRepository.Object);
